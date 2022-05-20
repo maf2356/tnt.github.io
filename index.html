@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>本地websocket测试</title>
+    <meta name="robots" content="all" />
+    <meta name="keywords" content="本地,websocket,测试工具" />
+    <meta name="description" content="本地,websocket,测试工具" />
+    <style>.btn-group{ display: inline-block; }</style>
+</head>
+<body>
+<div>
+    <canvas id="canvas" style="border: 1px solid #242121"></canvas>
+</div>
+</body>
+<script crossorigin="anonymous" integrity="sha384-LVoNJ6yst/aLxKvxwp6s2GAabqPczfWh6xzm38S/YtjUyZ+3aTKOnD/OJVGYLZDl" src="https://lib.baomitu.com/jquery/3.5.0/jquery.min.js"></script>
+<script language="javascript" type="text/javascript">
+    var web_socket;
+    var BLANK_IMG = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+    web_socket = new WebSocket('ws://10.12.72.171:9093');
+    var canvas = document.getElementById('canvas');
+    var g = canvas.getContext('2d');
+    web_socket.onmessage = function(event){
+        var reader = new FileReader();
+        reader.onload = function(eve){
+            if(eve.target.readyState == FileReader.DONE){
+                var img = document.createElement("img");
+                img.src = this.result;
+                var image = new Image();
+                img.onload = function(){
+                    canvas.style.width = '1180px';
+                    canvas.style.height = '940px';
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    g.drawImage(img, 0, 0);
+                    img.onload = null;
+                    img.src = BLANK_IMG;
+                    img = null;
+                }
+            }
+        };
+        reader.readAsDataURL(event.data);
+    };
+</script>
+</html>
