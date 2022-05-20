@@ -19,7 +19,7 @@
 <script language="javascript" type="text/javascript">
     var web_socket;
     var BLANK_IMG = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-    web_socket = new WebSocket('ws://10.12.72.171:9093');
+    web_socket = new WebSocket('wss://10.12.72.171:9093');
     var canvas = document.getElementById('canvas');
     var g = canvas.getContext('2d');
     web_socket.onmessage = function(event){
